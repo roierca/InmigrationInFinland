@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Inmigración en Finlandia</title>
+  <title>Inmigration In Finland</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       margin: 0;
       min-height: 100vh;
-      /* Degradado de verde musgo (#556B2F) a gris (#b0b0b0) */
+      /* Gradiente horizontal de verde musgo (#556B2F) a gris (#b0b0b0) */
       background: linear-gradient(90deg, #556B2F 0%, #b0b0b0 100%);
       font-family: 'Segoe UI', Arial, sans-serif;
     }
@@ -17,14 +17,35 @@
       padding: 40px 0;
       background: transparent;
       text-align: center;
+      overflow: hidden;
     }
-    h1 {
+    /* Animación de caída para el título */
+    .titulo-animado {
       color: #111;
       font-size: 3em;
       margin: 0;
       letter-spacing: 2px;
       font-weight: bold;
       text-transform: uppercase;
+      font-family: Impact, Fantasy, 'Segoe UI', Arial, sans-serif;
+      position: relative;
+      top: -120px;
+      opacity: 0;
+      animation: caerDesdeArriba 1.2s cubic-bezier(.23,1.13,.51,.99) forwards;
+    }
+    @keyframes caerDesdeArriba {
+      0% {
+        top: -120px;
+        opacity: 0;
+      }
+      70% {
+        top: 20px;
+        opacity: 1;
+      }
+      100% {
+        top: 0;
+        opacity: 1;
+      }
     }
     .contenido {
       max-width: 1000px;
@@ -46,7 +67,7 @@
       color: #444;
     }
     @media (max-width: 600px) {
-      h1 {
+      .titulo-animado {
         font-size: 2em;
       }
       .contenido {
@@ -61,12 +82,12 @@
 </head>
 <body>
   <header>
-    <h1>Inmigración en Finlandia</h1>
+    <h1 class="titulo-animado">Inmigration In Finland</h1>
   </header>
   <section class="contenido">
-    <!-- Aquí irá el texto del artículo -->
+    <!-- Article text goes here, in English -->
     <div class="espacio-grafico">
-      [Espacio reservado para Gráficos Interactivos]
+      [Space reserved for Interactive Graphics]
     </div>
   </section>
 </body>
