@@ -5,23 +5,40 @@
   <title>Inmigration In Finland</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
     body {
-  margin: 0;
-  min-height: 100vh;
-  /* Gradiente horizontal de azul Finlandia a blanco */
-  background: linear-gradient(90deg, #003580 0%, #F2F7FA 100%);
-  font-family: 'Segoe UI', Arial, sans-serif;
-}
+      min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      /* El fondo será cubierto por Vanta.js, pero dejamos color de respaldo */
+      background: linear-gradient(90deg, #181a1b 0%, #003580 100%);
+      position: relative;
+      z-index: 1;
+      overflow-x: hidden;
+    }
+    #vanta-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+    }
     header {
       width: 100%;
       padding: 40px 0;
       background: transparent;
       text-align: center;
       overflow: hidden;
+      position: relative;
+      z-index: 2;
     }
-    /* Animación de caída para el título */
     .titulo-animado {
-      color: #111;
+      color: #e6ecf4;
       font-size: 3em;
       margin: 0;
       letter-spacing: 2px;
@@ -32,55 +49,44 @@
       top: -120px;
       opacity: 0;
       animation: caerDesdeArriba 1.2s cubic-bezier(.23,1.13,.51,.99) forwards;
+      text-shadow: 0 6px 30px #00358077;
     }
     @keyframes caerDesdeArriba {
-      0% {
-        top: -120px;
-        opacity: 0;
-      }
-      70% {
-        top: 20px;
-        opacity: 1;
-      }
-      100% {
-        top: 0;
-        opacity: 1;
-      }
+      0% { top: -120px; opacity: 0; }
+      70% { top: 20px; opacity: 1; }
+      100% { top: 0; opacity: 1; }
     }
     .contenido {
       max-width: 1000px;
       margin: 40px auto;
-      background: rgba(255,255,255,0.85);
+      background: rgba(24,26,27,0.85); /* fondo oscuro semitransparente */
       border-radius: 14px;
-      box-shadow: 0 4px 24px rgba(60,60,60,0.07);
+      box-shadow: 0 4px 24px rgba(0,53,128,0.10);
       padding: 40px 30px;
       min-height: 300px;
+      position: relative;
+      z-index: 2;
+      color: #e6ecf4;
     }
     .espacio-grafico {
-      border: 2px dashed #556B2F;
-      background: rgba(85,107,47,0.07);
+      border: 2px dashed #5e738f;
+      background: rgba(0,53,128,0.07);
       border-radius: 10px;
       margin-top: 20px;
       padding: 40px;
       text-align: center;
       font-size: 1.2em;
-      color: #444;
+      color: #b7c8db;
     }
     @media (max-width: 600px) {
-      .titulo-animado {
-        font-size: 2em;
-      }
-      .contenido {
-        padding: 20px 5px;
-      }
-      .espacio-grafico {
-        padding: 20px 5px;
-        font-size: 1em;
-      }
+      .titulo-animado { font-size: 2em; }
+      .contenido { padding: 20px 5px; }
+      .espacio-grafico { padding: 20px 5px; font-size: 1em; }
     }
   </style>
 </head>
 <body>
+  <div id="vanta-bg"></div>
   <header>
     <h1 class="titulo-animado">Inmigration In Finland</h1>
   </header>
@@ -90,5 +96,27 @@
       [Space reserved for Interactive Graphics]
     </div>
   </section>
+
+  <!-- Vanta.js y Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <script>
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x0077be,          // Azul Finlandia
+      color2: 0x5e738f,         // Azul grisáceo
+      shininess: 35.0,
+      waveHeight: 22.0,
+      waveSpeed: 0.85,
+      zoom: 0.95,
+      backgroundColor: 0x181a1b // Negro grisáceo
+    });
+  </script>
 </body>
 </html>
