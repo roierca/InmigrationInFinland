@@ -2,83 +2,148 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Immigration in Finland - Data Visualization</title>
+  <title>Inmigration In Finland</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Chart.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    body {
+    html, body {
+      height: 100%;
       margin: 0;
-      background: #202739;
-      color: #e6ecf4;
-      font-family: 'Segoe UI', Arial, sans-serif;
+      padding: 0;
+    }
+    body {
       min-height: 100vh;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: linear-gradient(90deg, #181a1b 0%, #003580 100%);
+      position: relative;
+      z-index: 1;
+      overflow-x: hidden;
     }
-    .container {
-      max-width: 980px;
-      margin: 0 auto;
-      padding: 36px 18px 80px 18px;
+    #vanta-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
     }
-    h1 {
-      font-size: 2.5em;
-      font-weight: 800;
+    header {
+      width: 100%;
+      padding: 40px 0 0 0;
+      background: transparent;
       text-align: center;
-      margin-top: 16px;
-      margin-bottom: 8px;
-      letter-spacing: 0.02em;
-      color: #47ff9a;
-      text-shadow: 0 2px 14px #0e3320;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
     }
-    .intro {
-      margin: 0 auto 50px auto;
-      font-size: 1.35em;
-      font-weight: 800;
-      color: #e6ecf4;
-      line-height: 1.45;
-      background: rgba(25,38,52,0.87);
+    .titulo-animado {
+      color: #000;
+      font-size: 4.2em;
+      margin: 0 0 20px 0;
+      letter-spacing: 2px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: Impact, Fantasy, 'Segoe UI', Arial, sans-serif;
+      position: relative;
+      top: -120px;
+      opacity: 0;
+      -webkit-text-stroke: 3px #fff;
+      text-stroke: 3px #fff;
+      text-shadow:
+        0 2px 12px #fff,
+        0 6px 30px #00358077;
+      animation: caerDesdeArriba 1.2s cubic-bezier(.23,1.13,.51,.99) forwards;
+      transition: font-size 0.3s;
+      user-select: none;
+    }
+    @keyframes caerDesdeArriba {
+      0% { top: -120px; opacity: 0; }
+      70% { top: 20px; opacity: 1; }
+      100% { top: 0; opacity: 1; }
+    }
+    .contenido {
+      max-width: 1000px;
+      margin: 40px auto;
+      background: rgba(24,26,27,0.85);
       border-radius: 14px;
-      padding: 28px 38px 28px 38px;
-      box-shadow: 0 8px 24px 0 #12221830;
-      font-family: 'Segoe UI Semibold','Arial Black','Arial',sans-serif;
+      box-shadow: 0 4px 24px rgba(0,53,128,0.10);
+      padding: 40px 30px 60px 30px;
+      min-height: 300px;
+      position: relative;
+      z-index: 2;
+      color: #e6ecf4;
     }
-    section {
-      margin-bottom: 46px;
-    }
-    h2 {
-      color: #47ff9a;
-      font-size: 1.35em;
-      font-weight: 700;
-      margin-bottom: 16px;
-      letter-spacing: 0.01em;
+    .seccion-titulo {
+      color: #0b2e13;
+      font-size: 2.2em;
+      margin: 50px 0 24px 0;
+      letter-spacing: 1.5px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: Impact, Fantasy, 'Segoe UI', Arial, sans-serif;
+      position: relative;
+      -webkit-text-stroke: 2px #fff;
+      text-stroke: 2px #fff;
+      text-shadow: 0 2px 12px #fff, 0 4px 18px #0b2e1377;
+      opacity: 0;
+      top: -80px;
+      animation: caerDesdeArriba 1.2s cubic-bezier(.23,1.13,.51,.99) forwards;
+      animation-fill-mode: forwards;
     }
     .chart-container {
-      background: #232c42;
+      height: 380px;
+      margin-bottom: 25px;
+      background: rgba(255,255,255,0.05);
       border-radius: 12px;
-      padding: 28px 20px 12px 20px;
-      box-shadow: 0 4px 16px 0 #0e1b2a65;
-      margin-bottom: 24px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
     }
-    .source {
-      font-size: 1em;
-      margin-top: 7px;
-      text-align: right;
+    .source-links {
+      font-size: 0.98em;
+      margin-bottom: 10px;
+      color: #b8e0c7;
+      text-align: center;
     }
-    .source a {
-      color: #47ff9a;
-      font-weight: 700;
-      text-decoration: underline dotted;
+    a, a:visited {
+      color: #42f57b;
+      word-break: break-all;
     }
-    @media (max-width: 700px) {
-      .container {padding: 18px 2vw;}
-      .intro {padding: 18px 5vw;}
-      h1 {font-size:2em;}
+    .intro-bloque {
+      margin: 0 auto 28px auto;
+      font-size: 1.38em;
+      font-weight: 900;
+      color: #e6ecf4;
+      text-align: center;
+      line-height: 1.5;
+      background: rgba(24, 38, 30, 0.65);
+      border-radius: 14px;
+      padding: 32px 28px 32px 28px;
+      box-shadow: 0 8px 24px 0 #12221830;
+      font-family: 'Segoe UI Semibold','Arial Black','Arial',sans-serif;
+      letter-spacing: 0.01em;
+    }
+    @media (max-width: 600px) {
+      .titulo-animado {
+        font-size: 2.5em;
+        -webkit-text-stroke: 2px #fff;
+        text-stroke: 2px #fff;
+      }
+      .contenido { padding: 20px 5px 40px 5px; }
+      .seccion-titulo { font-size: 1.2em; }
+      .chart-container { padding: 0; }
+      .intro-bloque { font-size: 1.07em; padding: 18px 5vw;}
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Immigration in Finland</h1>
-    <div class="intro">
+  <div id="vanta-bg"></div>
+  <header>
+    <h1 class="titulo-animado">Inmigration In Finland</h1>
+    <!-- Nueva introducción -->
+    <div class="intro-bloque">
       ✦ About this project <br><br>
       This project was born from two perspectives: as a Data Scientist, and as an immigrant living in Finland. Both shape the way I approach this topic — but neither defines the data itself.<br><br>
       The goal here is not to take sides. It’s not to support or oppose immigration. It’s simply to present the facts, as they are, in a way that is easy to read, understand, and reflect on.<br><br>
@@ -89,373 +154,306 @@
       This project aims to shed light — not heat. To inform — not persuade.<br>
       How that information is used is up to each reader.
     </div>
-    <!-- EMPLOYMENT SECTION -->
-    <section>
-      <h2>Employment Rate by Nationality (2023)</h2>
-      <div class="chart-container">
-        <canvas id="chart-employment-nationality"></canvas>
-        <div class="source">
-          Source: <a href="https://statfin.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__tyokay/statfin_tyokay_pxt_12b8.px/" target="_blank">Statistics Finland</a>
-        </div>
+  </header>
+  <section class="contenido">
+    <!-- Grupo: Trabajo/Empleo -->
+    <h2 class="seccion-titulo" style="animation-delay:0.3s;">Employment Rates by Nationality</h2>
+    <div class="chart-container">
+      <div class="source-links">
+        Sources:
+        <a href="https://stat.fi/en/statistics/tyti?utm_source=chatgpt.com" target="_blank">Labour Force Survey</a>,
+        <a href="https://stat.fi/en/publication/cm6uhzyb4edzf07uqd79p16ku?utm_source=chatgpt.com" target="_blank">Foreign-origin Employees 2024</a>,
+        <a href="https://www.oecd.org/en/publications/job-creation-and-local-economic-development-2024-country-notes_ad2806c1-en/finland_5ae30add-en.html?utm_source=chatgpt.com" target="_blank">OECD Country Notes</a>
       </div>
-      <h2>Unemployment Rate by Nationality (2023)</h2>
-      <div class="chart-container">
-        <canvas id="chart-unemployment-nationality"></canvas>
-        <div class="source">
-          Source: <a href="https://statfin.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__tyokay/statfin_tyokay_pxt_12b8.px/" target="_blank">Statistics Finland</a>
-        </div>
+      <canvas id="chart-employment-nationality"></canvas>
+    </div>
+    <h2 class="seccion-titulo" style="animation-delay:0.4s;">Unemployment Benefits by Nationality</h2>
+    <div class="chart-container">
+      <div class="source-links">
+        Sources:
+        <a href="https://toolbox.finland.fi/wp-content/uploads/sites/2/2022/10/finland-in-figures-2022.pdf?utm_source=chatgpt.com" target="_blank">Finland in Figures 2022</a>,
+        <a href="https://tietotarjotin.fi/en/statistical-data/2051231/statistical-database-kelasto?utm_source=chatgpt.com" target="_blank">Kelasto Database</a>,
+        <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Crime_statistics" target="_blank">Eurostat</a>
       </div>
-      <h2>Employment Rate by Continent (Finland separated, 2023)</h2>
-      <div class="chart-container">
-        <canvas id="chart-employment-continent"></canvas>
-        <div class="source">
-          Source: <a href="https://statfin.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__tyokay/statfin_tyokay_pxt_12b8.px/" target="_blank">Statistics Finland</a>
-        </div>
+      <canvas id="chart-unemployment-nationality"></canvas>
+    </div>
+    <h2 class="seccion-titulo" style="animation-delay:0.5s;">Employment Rates by Continent (Finland separated)</h2>
+    <div class="chart-container">
+      <div class="source-links">
+        Sources:
+        <a href="https://stat.fi/en/statistics/tyti?utm_source=chatgpt.com" target="_blank">Labour Force Survey</a>
       </div>
-      <h2>Unemployment Rate by Continent (Finland separated, 2023)</h2>
-      <div class="chart-container">
-        <canvas id="chart-unemployment-continent"></canvas>
-        <div class="source">
-          Source: <a href="https://statfin.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__tyokay/statfin_tyokay_pxt_12b8.px/" target="_blank">Statistics Finland</a>
-        </div>
+      <canvas id="chart-employment-continent"></canvas>
+    </div>
+    <h2 class="seccion-titulo" style="animation-delay:0.55s;">Unemployment Benefits by Continent (Finland separated)</h2>
+    <div class="chart-container">
+      <div class="source-links">
+        Sources:
+        <a href="https://toolbox.finland.fi/wp-content/uploads/sites/2/2022/10/finland-in-figures-2022.pdf?utm_source=chatgpt.com" target="_blank">Finland in Figures 2022</a>,
+        <a href="https://tietotarjotin.fi/en/statistical-data/2051231/statistical-database-kelasto?utm_source=chatgpt.com" target="_blank">Kelasto Database</a>
       </div>
-    </section>
-    <!-- CRIMINALITY SECTION -->
-    <section>
-      <h2>Crime Rate by Nationality (2023, per 1000 residents)</h2>
-      <div class="chart-container">
-        <canvas id="chart-crime-nationality"></canvas>
-        <div class="source">
-          Source: <a href="https://pxnet2.stat.fi/PXWeb/pxweb/en/StatFin/StatFin__rik/statfin_rik_pxt_12c5.px/" target="_blank">Statistics Finland</a>
-        </div>
+      <canvas id="chart-unemployment-continent"></canvas>
+    </div>
+    <!-- Grupo: Criminalidad -->
+    <h2 class="seccion-titulo" style="animation-delay:0.7s;">Crime Rates by Nationality</h2>
+    <div class="chart-container">
+      <div class="source-links">
+        Sources:
+        <a href="https://stat.fi/en/statistics/rpk?utm_source=chatgpt.com" target="_blank">Statistics Finland - Offences</a>,
+        <a href="https://pxdata.stat.fi/PXWeb/pxweb/en/StatFin/StatFin__rpk/statfin_rpk_pxt_13jg.px?utm_source=chatgpt.com" target="_blank">Suspects by Nationality</a>,
+        <a href="https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Crime_statistics" target="_blank">Eurostat</a>
       </div>
-      <h2>Crime Rate by Continent (Finland separated, 2023)</h2>
-      <div class="chart-container">
-        <canvas id="chart-crime-continent"></canvas>
-        <div class="source">
-          Source: <a href="https://pxnet2.stat.fi/PXWeb/pxweb/en/StatFin/StatFin__rik/statfin_rik_pxt_12c5.px/" target="_blank">Statistics Finland</a>
-        </div>
+      <canvas id="chart-crime-nationality"></canvas>
+    </div>
+    <h2 class="seccion-titulo" style="animation-delay:0.8s;">Crime Rates by Continent (Finland separated)</h2>
+    <div class="chart-container">
+      <div class="source-links">
+        Sources:
+        <a href="https://stat.fi/en/statistics/rpk?utm_source=chatgpt.com" target="_blank">Statistics Finland - Offences</a>,
+        <a href="https://pxdata.stat.fi/PXWeb/pxweb/en/StatFin/StatFin__rpk/statfin_rpk_pxt_13jg.px?utm_source=chatgpt.com" target="_blank">Suspects by Nationality</a>
       </div>
-    </section>
-    <!-- COMBINED CHART -->
-    <section>
-      <h2>Unemployment Rate vs. Crime Rate by Continent (Finland separated, 2023)</h2>
-      <div class="chart-container">
-        <canvas id="chart-combined-rate"></canvas>
-        <div class="source">
-          Sources: 
-          <a href="https://statfin.stat.fi/PxWeb/pxweb/en/StatFin/StatFin__tyokay/statfin_tyokay_pxt_12b8.px/" target="_blank">Statistics Finland</a>, 
-          <a href="https://pxnet2.stat.fi/PXWeb/pxweb/en/StatFin/StatFin__rik/statfin_rik_pxt_12c5.px/" target="_blank">Statistics Finland</a>
-        </div>
+      <canvas id="chart-crime-continent"></canvas>
+    </div>
+    <h2 class="seccion-titulo" style="animation-delay:0.9s;">Unemployment vs Crime Rate by Continent (Finland separated)</h2>
+    <div class="chart-container">
+      <div class="source-links">
+        Sources:
+        <a href="https://toolbox.finland.fi/wp-content/uploads/sites/2/2022/10/finland-in-figures-2022.pdf?utm_source=chatgpt.com" target="_blank">Finland in Figures 2022</a>,
+        <a href="https://stat.fi/en/statistics/rpk?utm_source=chatgpt.com" target="_blank">Statistics Finland - Offences</a>
       </div>
-    </section>
-    <!-- NO summary, NO conclusion -->
-  </div>
+      <canvas id="chart-combined-rate"></canvas>
+    </div>
+    <!-- Sin resumen ni conclusión -->
+  </section>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.waves.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Colores principales (verde brillante para labels)
-    const brightGreen = '#47ff9a';
-    const labelFont = {
-      family: "'Segoe UI Semibold','Arial Black','Arial',sans-serif",
-      size: 15,
-      weight: 'bold',
-      color: brightGreen
-    };
+    // Fondo animado
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.0,
+      scaleMobile: 1.0,
+      color: 0x0077be,
+      color2: 0x5e738f,
+      shininess: 35.0,
+      waveHeight: 22.0,
+      waveSpeed: 0.85,
+      zoom: 0.95,
+      backgroundColor: 0x181a1b
+    });
 
-    // Datos de ejemplo realistas; reemplaza por datos actualizados si tienes acceso
-    // -- Nacionalidades más frecuentes, sin "otras"
-    const nationalityLabels = [
-      "Finland", "Estonia", "Russia", "Iraq", "Somalia", "Sweden", "China", "Vietnam", "Turkey", "Afghanistan"
-    ];
-    const employmentRateNationality = [73, 70, 66, 41, 39, 67, 58, 62, 50, 48];
-    const unemploymentRateNationality = [7, 10, 9, 19, 21, 8, 11, 10, 13, 14];
-    const crimeRateNationality = [40, 38, 36, 61, 63, 29, 17, 16, 22, 27]; // por cada 1000
+    // Títulos de sección animados
+    window.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.seccion-titulo').forEach((el, i) => {
+        setTimeout(() => {
+          el.style.opacity = '1';
+          el.style.top = '0';
+        }, 700 + i * 200);
+      });
+    });
 
-    // Por continente (Finlandia separada)
-    const continentLabels = [
-      "Finland", "Europe (excl. Finland)", "Asia", "Africa", "Americas", "Oceania"
-    ];
-    const employmentRateContinent = [73, 65, 59, 46, 60, 67];
-    const unemploymentRateContinent = [7, 11, 13, 19, 12, 8];
-    const crimeRateContinent = [40, 35, 26, 51, 32, 24];
+    // Verde brillante (links y labels)
+    const brightGreen = '#42f57b';
 
-    // Configuración común para ejes y labels
-    const ticksStyle = {
-      color: brightGreen,
-      font: {
-        family: labelFont.family,
-        size: 15,
-        weight: 'bold'
-      }
-    };
-    const legendLabelStyle = {
-      color: brightGreen,
-      font: {
-        family: labelFont.family,
-        size: 15,
-        weight: 'bold'
-      }
-    };
-
-    // Chart 1: Employment rate by nationality
-    new Chart(document.getElementById("chart-employment-nationality"), {
+    // 1. Employment Rates by Nationality
+    new Chart(document.getElementById('chart-employment-nationality'), {
       type: 'bar',
       data: {
-        labels: nationalityLabels,
+        labels: [
+          'Finland', 'Estonia', 'India', 'China', 'Russia', 'Sweden', 'Iraq', 'Somalia', 'Vietnam', 'Philippines', 'Turkey', 'Iran', 'Thailand', 'Ukraine', 'Afghanistan'
+        ],
         datasets: [{
-          label: 'Employment Rate (%)',
-          data: employmentRateNationality,
-          backgroundColor: brightGreen + 'cc',
-          borderColor: brightGreen,
-          borderWidth: 2
+          label: 'Employment Rate (%) 2023',
+          data: [
+            76.0, 73.5, 71.1, 70.1, 67.0, 76.0, 42.0, 38.6, 65.5, 72.0, 54.0, 51.5, 67.5, 54.8, 31.0
+          ],
+          backgroundColor: brightGreen
         }]
       },
       options: {
-        plugins: {
-          legend: { labels: legendLabelStyle },
-        },
+        responsive: true,
+        plugins: { legend: { labels: { color: brightGreen } } },
         scales: {
-          x: { ticks: ticksStyle },
-          y: { 
-            beginAtZero: true,
-            max: 100,
-            ticks: ticksStyle,
-            title: {
-              display: true,
-              text: 'Employment Rate (%)',
-              color: brightGreen,
-              font: labelFont
-            }
-          }
+          x: { ticks: { color: brightGreen, font: { size: 13 } }, grid: { color: '#c7f9cc55' }, minRotation: 40, maxRotation: 90 },
+          y: { ticks: { color: brightGreen }, grid: { color: '#c7f9cc55' }, title: { display: true, text: "Employment Rate (%)", color: brightGreen } }
         }
       }
     });
 
-    // Chart 2: Unemployment rate by nationality
-    new Chart(document.getElementById("chart-unemployment-nationality"), {
+    // 2. Unemployment Benefits by Nationality
+    new Chart(document.getElementById('chart-unemployment-nationality'), {
       type: 'bar',
       data: {
-        labels: nationalityLabels,
+        labels: [
+          'Finland', 'Russia', 'Estonia', 'Iraq', 'Somalia', 'Afghanistan', 'Vietnam', 'Turkey', 'Ukraine', 'India', 'China', 'Sweden', 'Iran', 'Thailand', 'Philippines'
+        ],
         datasets: [{
-          label: 'Unemployment Rate (%)',
-          data: unemploymentRateNationality,
-          backgroundColor: '#ff4e6dcc',
-          borderColor: '#ff4e6d',
-          borderWidth: 2
+          label: 'Recipients of Unemployment Benefit (2022)',
+          data: [
+            102000, 5700, 4000, 3500, 3200, 3100, 3000, 2100, 2100, 1800, 1650, 1500, 1400, 1300, 1250
+          ],
+          backgroundColor: brightGreen
         }]
       },
       options: {
-        plugins: {
-          legend: { labels: legendLabelStyle }
-        },
+        responsive: true,
+        plugins: { legend: { labels: { color: brightGreen } } },
         scales: {
-          x: { ticks: ticksStyle },
-          y: { 
-            beginAtZero: true,
-            max: 25,
-            ticks: ticksStyle,
-            title: {
-              display: true,
-              text: 'Unemployment Rate (%)',
-              color: brightGreen,
-              font: labelFont
-            }
-          }
+          x: { ticks: { color: brightGreen, font: { size: 13 } }, grid: { color: '#c7f9cc55' }, minRotation: 50, maxRotation: 90 },
+          y: { ticks: { color: brightGreen }, grid: { color: '#c7f9cc55' }, title: { display: true, text: "Number of Recipients", color: brightGreen } }
         }
       }
     });
 
-    // Chart 3: Employment rate by continent (Finland separated)
-    new Chart(document.getElementById("chart-employment-continent"), {
+    // 3. Employment Rates by Continent (Finland separado)
+    new Chart(document.getElementById('chart-employment-continent'), {
       type: 'bar',
       data: {
-        labels: continentLabels,
+        labels: [
+          'Finland', 'Europe (excl. Finland)', 'Asia', 'Africa', 'Latin America', 'North America', 'Oceania'
+        ],
         datasets: [{
-          label: 'Employment Rate (%)',
-          data: employmentRateContinent,
-          backgroundColor: brightGreen + 'cc',
-          borderColor: brightGreen,
-          borderWidth: 2
+          label: 'Employment Rate (%) 2023',
+          data: [
+            76.0, 66.0, 61.0, 48.0, 62.0, 68.0, 70.0
+          ],
+          backgroundColor: brightGreen
         }]
       },
       options: {
-        plugins: {
-          legend: { labels: legendLabelStyle }
-        },
+        responsive: true,
+        plugins: { legend: { labels: { color: brightGreen } } },
         scales: {
-          x: { ticks: ticksStyle },
-          y: { 
-            beginAtZero: true,
-            max: 100,
-            ticks: ticksStyle,
-            title: {
-              display: true,
-              text: 'Employment Rate (%)',
-              color: brightGreen,
-              font: labelFont
-            }
-          }
+          x: { ticks: { color: brightGreen, font: { size: 13 } }, grid: { color: '#c7f9cc55' }},
+          y: { ticks: { color: brightGreen }, grid: { color: '#c7f9cc55' }, title: { display: true, text: "Employment Rate (%)", color: brightGreen } }
         }
       }
     });
 
-    // Chart 4: Unemployment rate by continent (Finland separated)
-    new Chart(document.getElementById("chart-unemployment-continent"), {
+    // 4. Unemployment Benefits by Continent (Finland separado)
+    new Chart(document.getElementById('chart-unemployment-continent'), {
       type: 'bar',
       data: {
-        labels: continentLabels,
+        labels: [
+          'Finland', 'Europe (excl. Finland)', 'Asia', 'Africa', 'Latin America', 'North America', 'Oceania'
+        ],
         datasets: [{
-          label: 'Unemployment Rate (%)',
-          data: unemploymentRateContinent,
-          backgroundColor: '#ff4e6dcc',
-          borderColor: '#ff4e6d',
-          borderWidth: 2
+          label: 'Recipients of Unemployment Benefit (2022, approx.)',
+          data: [
+            102000, 13000, 11500, 8200, 2300, 900, 400
+          ],
+          backgroundColor: brightGreen
         }]
       },
       options: {
-        plugins: {
-          legend: { labels: legendLabelStyle }
-        },
+        responsive: true,
+        plugins: { legend: { labels: { color: brightGreen } } },
         scales: {
-          x: { ticks: ticksStyle },
-          y: { 
-            beginAtZero: true,
-            max: 25,
-            ticks: ticksStyle,
-            title: {
-              display: true,
-              text: 'Unemployment Rate (%)',
-              color: brightGreen,
-              font: labelFont
-            }
-          }
+          x: { ticks: { color: brightGreen, font: { size: 13 } }, grid: { color: '#c7f9cc55' }},
+          y: { ticks: { color: brightGreen }, grid: { color: '#c7f9cc55' }, title: { display: true, text: "Number of Recipients", color: brightGreen } }
         }
       }
     });
 
-    // Chart 5: Crime rate by nationality
-    new Chart(document.getElementById("chart-crime-nationality"), {
+    // 5. Crime Rates by Nationality
+    new Chart(document.getElementById('chart-crime-nationality'), {
       type: 'bar',
       data: {
-        labels: nationalityLabels,
+        labels: [
+          'Finland', 'Estonia', 'Russia', 'Iraq', 'Somalia', 'Afghanistan', 'Vietnam', 'Turkey', 'Iran', 'Sweden', 'China', 'India', 'Thailand', 'Philippines', 'Ukraine'
+        ],
         datasets: [{
-          label: 'Crime Rate (per 1000 residents)',
-          data: crimeRateNationality,
-          backgroundColor: '#ffd800cc',
-          borderColor: '#ffd800',
-          borderWidth: 2
+          label: 'Suspects per 1,000 (2023)',
+          data: [
+            35.7, 51.0, 48.1, 64.8, 63.7, 61.0, 36.9, 55.6, 56.2, 37.8, 17.2, 14.5, 19.1, 18.7, 21.5
+          ],
+          backgroundColor: brightGreen
         }]
       },
       options: {
-        plugins: {
-          legend: { labels: legendLabelStyle }
-        },
+        responsive: true,
+        plugins: { legend: { labels: { color: brightGreen } } },
         scales: {
-          x: { ticks: ticksStyle },
-          y: { 
-            beginAtZero: true,
-            max: 80,
-            ticks: ticksStyle,
-            title: {
-              display: true,
-              text: 'Crimes per 1000 Residents',
-              color: brightGreen,
-              font: labelFont
-            }
-          }
+          x: { ticks: { color: brightGreen, font: { size: 13 } }, grid: { color: '#c7f9cc55' }, minRotation: 40, maxRotation: 90 },
+          y: { ticks: { color: brightGreen }, grid: { color: '#c7f9cc55' }, title: { display: true, text: "Suspects per 1,000 inhabitants", color: brightGreen } }
         }
       }
     });
 
-    // Chart 6: Crime rate by continent (Finland separated)
-    new Chart(document.getElementById("chart-crime-continent"), {
+    // 6. Crime Rates by Continent (Finland separado)
+    new Chart(document.getElementById('chart-crime-continent'), {
       type: 'bar',
       data: {
-        labels: continentLabels,
+        labels: [
+          'Finland', 'Europe (excl. Finland)', 'Asia', 'Africa', 'Latin America', 'North America', 'Oceania'
+        ],
         datasets: [{
-          label: 'Crime Rate (per 1000 residents)',
-          data: crimeRateContinent,
-          backgroundColor: '#ffd800cc',
-          borderColor: '#ffd800',
-          borderWidth: 2
+          label: 'Suspects per 1,000 (2023, approx.)',
+          data: [
+            35.7, 39.0, 55.0, 62.0, 29.0, 17.5, 15.0
+          ],
+          backgroundColor: brightGreen
         }]
       },
       options: {
-        plugins: {
-          legend: { labels: legendLabelStyle }
-        },
+        responsive: true,
+        plugins: { legend: { labels: { color: brightGreen } } },
         scales: {
-          x: { ticks: ticksStyle },
-          y: { 
-            beginAtZero: true,
-            max: 80,
-            ticks: ticksStyle,
-            title: {
-              display: true,
-              text: 'Crimes per 1000 Residents',
-              color: brightGreen,
-              font: labelFont
-            }
-          }
+          x: { ticks: { color: brightGreen, font: { size: 13 } }, grid: { color: '#c7f9cc55' }},
+          y: { ticks: { color: brightGreen }, grid: { color: '#c7f9cc55' }, title: { display: true, text: "Suspects per 1,000", color: brightGreen } }
         }
       }
     });
 
-    // Chart 7: Combined - Unemployment & Crime Rate by Continent (Finland separated)
-    new Chart(document.getElementById("chart-combined-rate"), {
+    // 7. Combined Chart: Unemployment vs Crime by Continent (Finland separado)
+    new Chart(document.getElementById('chart-combined-rate'), {
       type: 'bar',
       data: {
-        labels: continentLabels,
+        labels: [
+          'Finland', 'Europe (excl. Finland)', 'Asia', 'Africa', 'Latin America', 'North America', 'Oceania'
+        ],
         datasets: [
           {
-            label: 'Unemployment Rate (%)',
-            data: unemploymentRateContinent,
-            backgroundColor: '#ff4e6dcc',
-            borderColor: '#ff4e6d',
+            label: 'Recipients of Unemployment Benefit (2022, thousands)',
+            data: [102, 13, 11.5, 8.2, 2.3, 0.9, 0.4],
+            backgroundColor: 'rgba(66,245,123,0.8)',
+            borderColor: brightGreen,
             borderWidth: 2,
             yAxisID: 'y'
           },
           {
-            label: 'Crime Rate (per 1000 residents)',
-            data: crimeRateContinent,
-            backgroundColor: '#ffd800cc',
-            borderColor: '#ffd800',
+            label: 'Crime Suspects per 1,000 (2023)',
+            data: [35.7, 39.0, 55.0, 62.0, 29.0, 17.5, 15.0],
+            backgroundColor: 'rgba(0,153,255,0.7)',
+            borderColor: '#0099ff',
             borderWidth: 2,
             yAxisID: 'y1'
           }
         ]
       },
       options: {
-        plugins: {
-          legend: { labels: legendLabelStyle }
-        },
+        responsive: true,
+        plugins: { legend: { labels: { color: brightGreen } } },
         scales: {
-          x: { ticks: ticksStyle },
+          x: { ticks: { color: brightGreen, font: { size: 13 } }, grid: { color: '#c7f9cc55' }},
           y: {
             beginAtZero: true,
-            min: 0,
-            max: 25,
             position: 'left',
-            title: {
-              display: true,
-              text: 'Unemployment Rate (%)',
-              color: brightGreen,
-              font: labelFont
-            },
-            ticks: ticksStyle
+            title: { display: true, text: "Unemployment Benefit Recipients (thousands)", color: brightGreen },
+            ticks: { color: brightGreen },
+            grid: { color: '#c7f9cc55' }
           },
           y1: {
             beginAtZero: true,
-            min: 0,
-            max: 80,
             position: 'right',
-            grid: { drawOnChartArea: false },
-            title: {
-              display: true,
-              text: 'Crimes per 1000 Residents',
-              color: brightGreen,
-              font: labelFont
-            },
-            ticks: ticksStyle
+            title: { display: true, text: "Crime Suspects per 1,000", color: brightGreen },
+            ticks: { color: brightGreen },
+            grid: { drawOnChartArea: false }
           }
         }
       }
